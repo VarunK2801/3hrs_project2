@@ -1,24 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import Header from "./Components/Header/Header";
+import Dashboard from "./Components/AdminDashboard/Dashboard";
+import Cart from "./Components/Cart/Cart";
+import { useState } from "react";
+import ContextProvider from "./Components/Context/ContextProvider";
+import CartForm from "./Components/Customer/CartForm";
 
-function App() {
+const App =()=> {
+  const [showCart,setShowCart]=useState(false)
+
+  const showCartOnScreen=()=>{
+    setShowCart(true)
+  }
+
+  const hideCartFromScreen=()=>{
+    setShowCart(false)
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ContextProvider>
+      <Header onShow={showCartOnScreen}/>
+      {showCart && <Cart onClose={hideCartFromScreen}/>}
+      <Dashboard/>
+      <CartForm />
+    </ContextProvider>
   );
 }
 
